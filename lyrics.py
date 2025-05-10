@@ -16,7 +16,7 @@ def generate_lyrics(prompt):
     
     output = response[0]['generated_text']
     
-    cleaned_output = output.replace("\n", " ")
-    formatted_lyrics = f"♪ {cleaned_output} ♪"
+    # cleaned_output = output.replace("\n", " ")
+    formatted_lyrics = f"♪ {output} ♪"
     
     return formatted_lyrics
