@@ -28,11 +28,20 @@ print("Preloading smaller models on CPU...")
 preload_models()
 
 def lyrics_to_audio(lyrics_text: str) -> str:
-    """Converts input lyrics to audio and saves as WAV file."""
-    
-    print("Generating audio...")
+    """Converts input lyrics to music-like audio and saves as WAV file."""
+
+    # Formatting the lyrics to make Bark understand it should be music
+    music_prompt = f"""
+    ♪ {lyrics_text} ♪
+    [Verse]
+    ♪ {lyrics_text} ♪
+    [Chorus]
+    ♪ {lyrics_text} ♪
+    """
+    print("Generating musical audio...")
+
     t0 = time.time()
-    audio_array = generate_audio(lyrics_text)
+    audio_array = generate_audio(music_prompt)
     generation_duration_s = time.time() - t0
     audio_duration_s = audio_array.shape[0] / SAMPLE_RATE
 
