@@ -10,12 +10,9 @@ def generate_lyrics(prompt):
     Returns:
         str: Formatted generated lyrics
     """
-    # Initialize text generation
-    generator = pipeline('text-generation', model='EleutherAI/gpt-neo-1.3B')
+    generator = pipeline('text-generation', model='EleutherAI/gpt-neo-125M')
     
-    # Generate lyrics based on the prompt
-    response = generator(prompt, max_length=50, temperature=0.7, do_sample=True)
-    
+    response = generator(prompt, max_length=300, temperature=0.7, eos_token_id=None, top_p=0.9, do_sample=True)
     
     output = response[0]['generated_text']
     
