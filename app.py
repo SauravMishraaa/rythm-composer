@@ -1,19 +1,25 @@
 from fastapi import FastAPI, Form
-from fastapi.responses import JSONResponse
-from transformers import pipeline
+from fastapi.responses import FileResponse, JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
+from lyrics import generate_lyrics
+from music import generate_audio_from_text
 
 app = FastAPI()
 
-# Function to generate lyrics 
-def generate_lyrics(prompt):
-    generator = pipeline('text-generation', model='EleutherAI/gpt-neo-1.3B')
-    response = generator(prompt, max_length=50, temperature=0.7, do_sample=True)
-    output = response[0]['generated_text']
-    cleaned_output = output.replace("\n", " ")
-    formatted_lyrics = f"♪ {cleaned_output} ♪"
-    return formatted_lyrics
+# Enable CORS for Streamlit frontend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
 @app.post("/generate-lyrics")
-async def generate_lyrics_endpoint(prompt: str = Form(...)):
+def generate_lyrics_endpoint(prompt: str = Form(...)):
     lyrics = generate_lyrics(prompt)
-    return JSONResponse(content={"lyrics": lyrics})
+    return {"lyrics": lyrics}
+
+@app.post("/generate-audio")
+def generate_audio_endpoint(lyrics: str = Form(...)):
+    filename = generate_audio_from_text(lyrics)
+    return FileResponse(filename, media_type="audio/wav", filename="song.wav")
