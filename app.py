@@ -2,7 +2,6 @@ from fastapi import FastAPI, Form
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from lyrics import generate_lyrics
-from music import generate_audio_from_text
 
 app = FastAPI()
 
@@ -19,7 +18,7 @@ def generate_lyrics_endpoint(prompt: str = Form(...)):
     lyrics = generate_lyrics(prompt)
     return {"lyrics": lyrics}
 
-@app.post("/generate-audio")
-def generate_audio_endpoint(lyrics: str = Form(...)):
-    filename = generate_audio_from_text(lyrics)
-    return FileResponse(filename, media_type="audio/wav", filename="song.wav")
+# @app.post("/generate-musicaudio")
+# def generate_audio_endpoint(lyrics: str = Form(...)):
+#     filename = generate_audio_from_text(lyrics)
+#     return FileResponse(filename, media_type="audio/wav", filename="song.wav")

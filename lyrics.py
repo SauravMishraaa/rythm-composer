@@ -12,7 +12,7 @@ def generate_lyrics(prompt):
     """
     generator = pipeline('text-generation', model='EleutherAI/gpt-neo-125M')
     
-    response = generator(prompt, max_length=300, temperature=0.7, eos_token_id=None, top_p=0.9, do_sample=True)
+    response = generator(prompt, max_length=100, temperature=0.5, eos_token_id=None, top_p=0.9, do_sample=True)
     
     output = response[0]['generated_text']
     

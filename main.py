@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Form
 from fastapi.responses import FileResponse, JSONResponse
 from lyrics import generate_lyrics
-from vocals import lyrics_to_audio
+from music import lyrics_to_audio
 
 app = FastAPI(title="Lyrics & Voice Generator API")
 
