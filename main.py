@@ -9,8 +9,7 @@ app = FastAPI(title="Lyrics & Voice Generator API")
 async def generate_lyrics_endpoint(prompt: str = Form(...)):
     lyrics = generate_lyrics(prompt)
     return JSONResponse(content={"lyrics": lyrics})
-
-
+    
 @app.post("/generate-music")
 async def generate_music(prompt: str = Form(...)):
     audio_path = lyrics_to_audio(prompt)
